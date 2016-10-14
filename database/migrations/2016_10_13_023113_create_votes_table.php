@@ -14,6 +14,12 @@ class CreateVotesTable extends Migration
     public function up()
     {
         //
+        Schema::create('voting_votes', function(Blueprint $table){
+          $table->increments('id');
+          $table->integer('user_id');
+          $table->integer('nominee_id');
+          $table->timestamps();
+        });
     }
 
     /**
@@ -23,6 +29,6 @@ class CreateVotesTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('voting_votes');
     }
 }

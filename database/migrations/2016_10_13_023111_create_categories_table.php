@@ -13,7 +13,12 @@ class CreateCategoriesTable extends Migration
      */
     public function up()
     {
-        //
+      Schema::create('voting_categories', function(Blueprint $table){
+        $table->increments('id');
+        $table->string('name', 128);
+        $table->text('description');
+        $table->timestamps();
+      });
     }
 
     /**
@@ -23,6 +28,6 @@ class CreateCategoriesTable extends Migration
      */
     public function down()
     {
-        //
+      Schema::drop('voting_categories');
     }
 }
