@@ -1,0 +1,32 @@
+{
+    "name": "soda-framework/voting",
+    "description": "Voting packing for Soda CMS",
+    "type": "library",
+    "require": {
+        "soda-framework/cms": "0.4.*"
+    },
+    "autoload": {
+	"psr-4": {
+	   "Soda\\Voting\\": "src/"
+	}
+    },
+    "keywords": [
+	"CMS",
+	"Soda",
+	"Framwork",
+	"Laravel",
+	"Voting"	
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jarrad Littleford",
+            "email": "jplittleford@gmail.com"
+        },
+	{
+	    "name": "Ryan Brenton-Canham",
+	    "email": "ryzaar@hotmail.com"
+	}
+    ],
+    "minimum-stability": "dev"
+}
