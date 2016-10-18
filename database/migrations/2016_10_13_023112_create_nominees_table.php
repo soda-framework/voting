@@ -18,7 +18,7 @@ class CreateNomineesTable extends Migration
           $table->string('name', 128);
           $table->string('description', 255);
           $table->text('details');
-          $table->string('image', 255);
+          $table->string('image', 255)->nullable();
           $table->integer('category_id');
           $table->timestamps();
       });

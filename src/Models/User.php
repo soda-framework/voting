@@ -2,8 +2,12 @@
 
 namespace Soda\Voting\Models;
 
-use Soda\Cms\Models\User;
+use Soda\Cms\Models\User as SodaUser;
 
-class User extends User{
-  
+class User extends SodaUser{
+
+    public function Votes(){
+        return $this->hasMany(Votes::class);
+    }
+
 }

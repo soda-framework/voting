@@ -26,21 +26,21 @@ class VotingServiceProvider extends ServiceProvider{
           'icon'        => 'fa fa-sitemap',
           'url'         => route('voting.categories'),
           'label'       => 'Categories',
-          'isCurrent'   => soda_request_is('voting/*')
+          'isCurrent'   => soda_request_is('voting/categories*')
         ]);
 
         $menu['Voting']->addChild('Nominees', [
           'icon'        => 'fa fa-users',
           'url'         => route('voting.nominees'),
           'label'       => 'Nominees',
-          'isCurrent'   => soda_request_is('voting/*')
+          'isCurrent'   => soda_request_is('voting/nominees*')
         ]);
 
         $menu['Voting']->addChild('Reports', [
           'icon'        => 'fa fa-copy',
           'url'         => route('voting.reports'),
           'label'       => 'Reports',
-          'isCurrent'   => soda_request_is('voting/*')
+          'isCurrent'   => soda_request_is('voting/reports*')
         ]);
     });
   }
