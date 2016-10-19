@@ -36,9 +36,9 @@ class ReportController extends BaseController {
         if($handler instanceof AbstractReport){
             $report->last_run = Carbon::now()->toDateTimeString();
             $report->save();
-            return $handler->generateReport();   //Runs the handler method of said class
+            return $handler->export();   //Runs the handler method of said class
         }else{
-            return back()->with('danger', 'Does not implement Abstract Report interface');
+            throw new \RuntimeException(get_class($handler) .' must implement ' . AbstractReport::class);
         }
     }
 }
