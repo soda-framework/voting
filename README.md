@@ -11,7 +11,7 @@ https://github.com/soda-framework/cms
 ```
 
 3) Integrate Soda Voting into laravel by adding `\Soda\Voting\Providers\VotingServiceProvider::class`
-in the providers array in '/config/app.php'
+in the providers array in `/config/app.php`
 ```
     'providers' => [
         Soda\Providers\SodaServiceProvider::class,
