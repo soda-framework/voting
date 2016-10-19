@@ -7,16 +7,16 @@
       "zofe/rapyd": "2.2.*"
     },
     "autoload": {
-	"psr-4": {
-	   "Soda\\Voting\\": "src/"
-	}
+       "psr-4": {
+         "Soda\\Voting\\": "src/"
+       }
     },
     "keywords": [
-	"CMS",
-	"Soda",
-	"Framwork",
-	"Laravel",
-	"Voting"
+      "CMS",
+      "Soda",
+      "Framwork",
+      "Laravel",
+      "Voting"
     ],
     "license": "MIT",
     "authors": [
@@ -24,10 +24,10 @@
             "name": "Jarrad Littleford",
             "email": "jplittleford@gmail.com"
         },
-	{
-	    "name": "Ryan Brenton-Canham",
-	    "email": "ryzaar@hotmail.com"
-	}
+        {
+          "name": "Ryan Brenton-Canham",
+          "email": "ryzaar@hotmail.com"
+        }
     ],
     "minimum-stability": "dev"
 }

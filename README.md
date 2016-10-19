@@ -21,6 +21,9 @@ in the providers array in `/config/app.php`
 
 4) Run the database migrations `php artisan migrate` to generate the necessary tables
 
+##Configuration
+//TODO
+
 ##Voting endpoints
 There a number of api end points available to help with the voting process,
 found at `routes/api.php`.
