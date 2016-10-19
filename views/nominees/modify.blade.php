@@ -9,7 +9,7 @@
 @stop
 
 @section('head.cms')
-    <title>Voting | Nominees</title>
+    <title>Voting | Nominees | Edit</title>
 @endsection
 
 @section('content-heading-button')

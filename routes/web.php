@@ -2,7 +2,7 @@
 Route::group(['prefix' => config('soda.cms.path'), 'middleware' => 'soda.auth:soda'], function(){
     Route::group(['prefix' => 'voting'], function(){
         Route::group(['prefix' => 'categories'], function(){
-            Route::get('index', 'CategoryController@anyIndex')
+            Route::get('/', 'CategoryController@anyIndex')
             ->name('voting.categories');
 
             Route::get('delete/{id}', 'CategoryController@getDelete')
@@ -16,7 +16,7 @@ Route::group(['prefix' => config('soda.cms.path'), 'middleware' => 'soda.auth:so
         });
 
         Route::group(['prefix' => 'nominees'], function(){
-            Route::get('index', 'NomineeController@anyIndex')
+            Route::get('/', 'NomineeController@anyIndex')
                 ->name('voting.nominees');
 
             Route::get('delete/{id}', 'NomineeController@getDelete')
@@ -29,8 +29,13 @@ Route::group(['prefix' => config('soda.cms.path'), 'middleware' => 'soda.auth:so
                 ->name('voting.nominees.post.modify');
         });
 
-        Route::get('reports', '\Soda\Voting\Controllers\ReportController@anyIndex')
-            ->name('voting.reports');
+        Route::group(['prefix' => 'reports'], function(){
+            Route::get('/', 'ReportController@anyIndex')
+                ->name('voting.reports');
+
+            Route::get('run/{id}', 'ReportController@getRun')
+                ->name('voting.reports.get.run');
+        });
     });
 });
 
