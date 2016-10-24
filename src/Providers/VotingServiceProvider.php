@@ -47,7 +47,7 @@ class VotingServiceProvider extends ServiceProvider{
   }
 
   public function register(){
-      $this->mergeConfigFrom(__DIR__.'/../../config/voting.php', 'soda.votes');
+      $this->mergeConfigFrom(__DIR__.'/../../config/voting.php', 'soda.votes.voting');
 
     \Route::group(['namespace' => 'Soda\Voting\Controllers', 'middleware' => 'web'], function ($router) {
             require(__DIR__.'/../../routes/web.php');
