@@ -20,12 +20,13 @@ class Helpers
             }
             return $new_category;
         });
+        //Truncating each category collection to its max allowed size
         foreach ($categories as $category) {
             while ($category->count() > config('soda.votes.voting.max_votes_per_category')) {
                 if (config('soda.votes.voting.replace_votes')) {
-                    $category->shift();
+                    $category->shift(); //Collection array FIFO queue
                 } else {
-                    $category->pop();
+                    $category->pop();   //Typical stack
                 }
             }
         }

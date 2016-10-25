@@ -11,6 +11,12 @@ use Soda\Voting\Models\Nominee;
 
 
 class VotingController extends BaseController {
+
+
+    /**
+     * @param null $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getCategories($id = null){
         $categories = Category::with('nominees');
         if(is_null($id)){
@@ -23,8 +29,22 @@ class VotingController extends BaseController {
 
     /**
      * @param Request $request
-     * @return mixed
-     * @throws \Exception
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getNominees(Request $request){
+        if($request->has('nominees')){
+            $requestNominees = json_decode($request->input('nominees'));
+            if(!is_array($requestNominees)) $requestNominees = [$requestNominees];
+            $nominees = Nominee::whereIn('id', $requestNominees)->get();
+            return response()->json($nominees);
+        }else{
+            abort(500, 'Expecting a JSON array called nominees in request');
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function postVote(Request $request){
         if($request->has('votes')){
@@ -33,7 +53,7 @@ class VotingController extends BaseController {
             $votes = Helpers::truncateVotes($votes);
             return response()->json(['votes' => $votes, 'hash' => $hash]);
         }else{
-            throw new \Exception('Expecting a JSON array called votes in request');
+            abort(500, 'Expecting a JSON array called votes in request');
         }
     }
 }
