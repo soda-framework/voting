@@ -49,8 +49,8 @@ class VotingController extends BaseController {
     public function postVote(Request $request){
         if($request->has('votes')){
             $votes = json_decode($request->input('votes'));
-            $hash = Hash::make(implode($votes));
             $votes = Helpers::truncateVotes($votes);
+            $hash = Helpers::hashVotes($votes);
             return response()->json(['votes' => $votes, 'hash' => $hash]);
         }else{
             abort(500, 'Expecting a JSON array called votes in request');

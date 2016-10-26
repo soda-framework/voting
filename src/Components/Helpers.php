@@ -5,6 +5,7 @@ namespace Soda\Voting\Components;
 
 use Illuminate\Support\Collection;
 use Soda\Voting\Models\Nominee;
+use Hash;
 
 class Helpers
 {
@@ -32,5 +33,14 @@ class Helpers
         }
         $categories = $categories->collapse();
         return $categories->toArray();
+    }
+
+    static public function hashVotes($votes){
+        return hash('tiger192,4', implode($votes) . env('APP_KEY'));
+    }
+
+    static public function verifyVotes($votes, $hash){
+        $new = Helpers::hashVotes($votes);
+        return $new === $hash;
     }
 }
