@@ -36,7 +36,7 @@ class Helpers
     }
 
     static public function hashVotes($votes){
-        return hash('tiger192,4', implode($votes) . env('APP_KEY'));
+        return hash('sha256', implode($votes) . env('APP_KEY'));
     }
 
     static public function verifyVotes($votes, $hash){
