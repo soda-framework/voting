@@ -2,6 +2,7 @@
     "name": "soda-framework/voting",
     "description": "Voting packing for Soda CMS",
     "type": "library",
+    "minimum-stability": "dev",
     "require": {
       "soda-framework/cms": "0.4.*",
       "zofe/rapyd": "2.2.*"
