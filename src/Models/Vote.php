@@ -16,10 +16,10 @@ class Vote extends Model{
     ];
     
     public function User(){
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function Nominee(){
-        return $this->hasOne(Nominee::class)->selectRaw('nominee_id, count(*) as count')->groupBy('user_id');
+        return $this->belongsTo(Nominee::class);
     }
 }

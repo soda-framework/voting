@@ -16,12 +16,22 @@ class IndividualVoteReport extends AbstractReport{
 
     public function view(){
         $filter = DataFilter::source(Vote::with('user', 'nominee'));
-        $filter->add('vote.nominee.name','Nominee Name', 'text');
+        $filter->add('nominee.name','Nominee Name', 'text');
+        $filter->add('user.username', 'User Name', 'text');
         $filter->add('ip_address', 'IP Address', 'text');
-
+        $filter->submit('Search');
+        $filter->reset('Clear');
         $filter->build();
 
-        $grid = 'sup';
+        $grid = DataGrid::source($filter);
+        $grid->add('id', 'ID', true);
+        $grid->add('nominee.name', 'Nominee Name', true);
+        $grid->add('user.username','User Name', true);
+        $grid->add('user.email', 'User email', true);
+        $grid->add('ip_address', 'IP Address');
+
+        $grid->paginate(20);
+
         return view('soda.voting::reports.votes.individual', compact('filter', 'grid'));
     }
 }

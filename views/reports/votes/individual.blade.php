@@ -21,8 +21,8 @@
 @endsection
 
 @include(soda_cms_view_path('partials.heading'), [
-    'icon'        => 'fa fa-sitemap',
-    'title'       => 'Categories',
+    'icon'        => 'fa fa-copy',
+    'title'       => 'Individual Votes',
 ])
 
 @section('content')
