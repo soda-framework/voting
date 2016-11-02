@@ -23,7 +23,7 @@ class ReportController extends BaseController {
         $grid->add('name', 'Name', true);
         $grid->add('last_run|strtotime|date[d/m/Y g:i a]', 'Last time run', true);
         $grid->add('{{ $id }}', 'Action')->cell(function($value){
-            $content = '<a href="' . route('voting.reports.get.run', $value) . '" class="btn btn-warning">Run</a>';
+            $content = '<a href="' . route('voting.reports.get.run', $value) . '" class="btn btn-warning">Download</a>';
             $content .= '<a href="' . route('voting.reports.get.view', $value);
             $content .= '" class="btn btn-success" style="margin-left: 5px">View</a>';
             return $content;

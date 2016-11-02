@@ -3,7 +3,8 @@
 @section('breadcrumb')
     <ol class="breadcrumb">
         <li><a href="{{ route('soda.home') }}">Home</a></li>
-        <li class="active">Reports</li>
+        <li><a href="{{ route('voting.reports') }}">Reports</a></li>
+        <li class="active">Votes</li>
     </ol>
 @stop
 
@@ -24,21 +25,25 @@
                 <table class="table table-striped table-bordered">
                     <thead>
                     <tr>
-                        <th style="width: 33%;">Nominee Name</th>
-                        <th style="width: 33%;">Nominee Description</th>
-                        <th style="width: 33%;">Number of votes</th>
+                        <th style="width: 5%;">Position</th>
+                        <th style="width: 25%;">Nominee Name</th>
+                        <th style="width: 25%;">Nominee Description</th>
+                        <th style="width: 20%;">Number of votes</th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach($thing as $vote)
                         <tr>
-                            <td style="width: 33%;">
+                            <td style="width: 5%;">
+                                {{ $loop->iteration }}
+                            </td>
+                            <td style="width: 25%;">
                                 {{ $vote->name }}
                             </td>
-                            <td style="width: 33%;">
+                            <td style="width: 25%;">
                                 {{ $vote->description }}
                             </td>
-                            <td style="width: 33%;">
+                            <td style="width: 20%;">
                                 {{ $vote->votes_count }}
                             </td>
                         </tr>
