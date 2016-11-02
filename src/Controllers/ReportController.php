@@ -7,6 +7,7 @@ use Soda\Voting\Components\AbstractReport;
 use Soda\Voting\Models\Report;
 use Zofe\Rapyd\DataFilter\DataFilter;
 use Zofe\Rapyd\DataGrid\DataGrid;
+use Carbon\Carbon;
 
 class ReportController extends BaseController {
 
@@ -23,6 +24,8 @@ class ReportController extends BaseController {
         $grid->add('last_run|strtotime|date[d/m/Y g:i a]', 'Last time run', true);
         $grid->add('{{ $id }}', 'Action')->cell(function($value){
             $content = '<a href="' . route('voting.reports.get.run', $value) . '" class="btn btn-warning">Run</a>';
+            $content .= '<a href="' . route('voting.reports.get.view', $value);
+            $content .= '" class="btn btn-success" style="margin-left: 5px">View</a>';
             return $content;
         });
         $grid->paginate(20);
@@ -37,6 +40,18 @@ class ReportController extends BaseController {
             $report->last_run = Carbon::now()->toDateTimeString();
             $report->save();
             return $handler->export();   //Runs the handler method of said class
+        }else{
+            throw new \RuntimeException(get_class($handler) .' must implement ' . AbstractReport::class);
+        }
+    }
+
+    public function getView($id){
+        $report = Report::find($id);
+        $handler = app($report->class_path);
+        if($handler instanceof  AbstractReport){
+            $report->last_run = Carbon::now()->toDateTimeString();
+            $report->save();
+            return $handler->view();   //Runs the handler method of said class
         }else{
             throw new \RuntimeException(get_class($handler) .' must implement ' . AbstractReport::class);
         }

@@ -19,11 +19,15 @@ class Nominee extends Model{
 
 
     public function votes(){
-        return $this->hasMany(Votes::class);
+        return $this->hasMany(Vote::class);
     }
 
     public function category(){
         return $this->belongsTo(Category::class);
+    }
+
+    public function getVoteCountAttribute(){
+        return $this->getRelation('votes');
     }
 
     public function scopeHasCategory($q, $category_id){

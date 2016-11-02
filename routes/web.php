@@ -35,6 +35,9 @@ Route::group(['prefix' => config('soda.cms.path'), 'middleware' => 'soda.auth:so
 
             Route::get('run/{id}', 'ReportController@getRun')
                 ->name('voting.reports.get.run');
+
+            Route::get('view/{id}', 'ReportController@getView')
+                ->name('voting.reports.get.view');
         });
     });
 });
