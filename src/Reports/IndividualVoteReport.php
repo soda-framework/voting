@@ -24,7 +24,7 @@ class IndividualVoteReport extends AbstractReport{
         });
 
         $as_excel = ['delimiter'=>',', 'enclosure'=>'"', 'line_ending'=>"\n"];
-        return $grid->buildCSV('individuial_vote', 'Y-m-d', true, $as_excel);
+        return $grid->buildCSV(storage_path() . '/individuial_vote', 'Y-m-d', true, $as_excel);
 
     }
 
