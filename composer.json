@@ -2,7 +2,6 @@
     "name": "soda-framework/voting",
     "description": "Voting packing for Soda CMS",
     "type": "library",
-    "minimum-stability": "dev",
     "require": {
       "soda-framework/cms": "0.4.*",
       "zofe/rapyd": "2.2.*"
@@ -23,12 +22,11 @@
     "authors": [
         {
             "name": "Jarrad Littleford",
-            "email": "jplittleford@gmail.com"
+            "email": "jarrad.littleford@protonmail.com"
         },
         {
           "name": "Ryan Brenton-Canham",
           "email": "ryzaar@hotmail.com"
         }
     ],
-    "minimum-stability": "dev"
 }
