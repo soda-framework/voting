@@ -18,7 +18,9 @@ class VotingController extends BaseController {
      * @return \Illuminate\Http\JsonResponse
      */
     public function getCategories($id = null){
-        $categories = Category::with('nominees');
+        $categories = Category::with(['nominees' => function($q){
+            return $q->orderBy('name', 'ASC');
+        }]);
         if(is_null($id)){
             $categories = $categories->get();
         }else{
