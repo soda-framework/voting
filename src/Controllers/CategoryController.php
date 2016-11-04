@@ -54,7 +54,7 @@ class CategoryController extends BaseController
     {
         $this->validate($request, [
             'name'          => 'required|max:128',
-            'description'   => 'required|max:255'
+            'description'   => 'max:255'
         ]);
         $category = ($request->has('id'))? Category::find($request->input('id')) : new Category;
         //dd($request, $category);

@@ -57,8 +57,8 @@ class NomineeController extends BaseController{
     public function postModify(Request $request){
         $this->validate($request, [
             'name'          => 'required|max:128',
-            'description'   => 'required|max:255',
-            'details'       => 'required|max:1000',
+            'description'   => 'max:255',
+            'details'       => 'max:1000',
             'category_id'   => 'required|integer'
         ]);
         $nominee = ($request->has('id'))? Nominee::find($request->id) : new Nominee;
