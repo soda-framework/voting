@@ -7,7 +7,7 @@ use Soda\Cms\Models\User as SodaUser;
 class User extends SodaUser{
 
     public function Votes(){
-        return $this->hasMany(Votes::class);
+        return $this->hasMany(Vote::class);
     }
 
 }
