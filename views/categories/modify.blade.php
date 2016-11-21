@@ -43,6 +43,11 @@
                 'name'        => 'Category Description',
                 'field_name'  => 'description',
             ])->setModel($category) !!}
+            
+            {!! SodaForm::fancy_upload([
+                'name'        => 'Category Image',
+                'field_name'  => 'image',
+            ])->setModel($category) !!}
         </form>
     </div>
 
