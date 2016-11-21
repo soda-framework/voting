@@ -13,7 +13,7 @@ class VotingServiceProvider extends ServiceProvider{
 
     $this->loadViewsFrom(__DIR__ . '/../../views', config('soda.voting.hint'));
     $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
-    $this->publishes([__DIR__.'/../../config' => config_path('soda')], 'soda.votes');
+    $this->publishes([__DIR__.'/../../config' => config_path('soda/votes')], 'soda.votes');
 
     SodaMenu::menu('sidebar', function($menu){
         $menu->addItem('Voting', [
@@ -47,8 +47,7 @@ class VotingServiceProvider extends ServiceProvider{
   }
 
   public function register(){
-      $this->mergeConfigFrom(__DIR__.'/../../config/voting.php', 'soda.votes.voting');
-
+    $this->mergeConfigFrom(__DIR__.'/../../config/voting.php', 'soda.votes.voting');
     \Route::group(['namespace' => 'Soda\Voting\Controllers', 'middleware' => 'web'], function ($router) {
             require(__DIR__.'/../../routes/web.php');
     });

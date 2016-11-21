@@ -1,5 +1,4 @@
 <?php
-
 return [
   'max_votes_per_category'  => 1,
   'replace_votes'   => true,

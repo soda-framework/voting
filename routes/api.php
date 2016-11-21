@@ -1,6 +1,5 @@
 <?php
-
-Route::group(['prefix' => config('soda.voting.api_path')], function(){
+Route::group(['prefix' => config('soda.votes.voting.api_path')], function(){
     Route::get('categories/{id?}', 'VotingController@getCategories')
         ->name('api.voting.get.categories');
 
