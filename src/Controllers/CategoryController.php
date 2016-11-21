@@ -22,6 +22,7 @@ class CategoryController extends BaseController
         $grid->add('id', 'ID', true);
         $grid->add('name', 'Name', true);
         $grid->add('description', 'Description');
+        $grid->add('image', 'Image');
         $grid->add('created_at|strtotime|date[d/m/Y]', 'Created At', true);
         $grid->add('{{ $id }}', 'Options')->cell(function ($id) {
             $content = '<a href="' . route('voting.categories.get.delete', $id) . '" class="btn btn-danger">Delete</a>';
