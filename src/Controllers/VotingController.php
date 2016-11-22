@@ -52,7 +52,12 @@ class VotingController extends BaseController {
     public function postVote(Request $request){
         if($request->has('votes')){
             $votes = json_decode($request->input('votes'));
-            $votes = Helpers::truncateVotes($votes);
+            if( $request->has('ranked') ){
+                $votes = Helpers::truncateVotes($votes,$request->input('ranked'));
+            }
+            else{
+                $votes = Helpers::truncateVotes($votes);
+            }
             $hash = Helpers::hashVotes($votes);
             return response()->json(['votes' => $votes, 'hash' => $hash]);
         }else{
