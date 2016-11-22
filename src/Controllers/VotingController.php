@@ -25,6 +25,7 @@ class VotingController extends BaseController {
             $categories = $categories->get();
         }else{
             $categories = $categories->where('id', $id)->first();
+            $categories = [$categories];
         }
         return response()->json($categories);
     }
