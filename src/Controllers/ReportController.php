@@ -29,7 +29,7 @@ class ReportController extends BaseController {
             return $content;
         });
         $grid->paginate(20);
-        return view('soda.voting::reports.index', compact('filter', 'grid'));
+        return view('soda.votes.voting::reports.index', compact('filter', 'grid'));
     }
 
 
