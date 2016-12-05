@@ -11,6 +11,8 @@ class User extends SodaUser{
         'password',
         'remember_token',
         'application_id',
+        'phone',
+        'dob',
     ];
 
     public function Votes(){
