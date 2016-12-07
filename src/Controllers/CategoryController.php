@@ -32,7 +32,7 @@ class CategoryController extends BaseController
 
         $grid->paginate(20);
 
-        return view('soda.voting::categories.index', compact('filter', 'grid'));
+        return view('soda.votes.voting::categories.index', compact('filter', 'grid'));
     }
 
 
@@ -48,7 +48,7 @@ class CategoryController extends BaseController
         if (!is_null($id)){
             $category = Category::firstOrNew(['id' => $id]);
         }
-        return view('soda.voting::categories.modify', compact('category'));
+        return view('soda.votes.voting::categories.modify', compact('category'));
     }
 
     public function postModify(Request $request)

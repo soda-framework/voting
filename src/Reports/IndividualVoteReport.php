@@ -45,6 +45,6 @@ class IndividualVoteReport extends AbstractReport{
 
         $grid->paginate(20);
 
-        return view('soda.voting::reports.votes.individual', compact('filter', 'grid'));
+        return view('soda.votes.voting::reports.votes.individual', compact('filter', 'grid'));
     }
 }

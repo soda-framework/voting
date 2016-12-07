@@ -11,7 +11,7 @@ use SodaMenu;
 class VotingServiceProvider extends ServiceProvider{
   public function boot(){
 
-    $this->loadViewsFrom(__DIR__ . '/../../views', config('soda.voting.hint'));
+    $this->loadViewsFrom(__DIR__ . '/../../views', config('soda.votes.voting.hint'));
     $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
     $this->publishes([__DIR__.'/../../config' => config_path('soda/votes')], 'soda.votes');
 

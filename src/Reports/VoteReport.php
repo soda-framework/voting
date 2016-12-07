@@ -22,7 +22,7 @@ class VoteReport extends AbstractReport{
 
     public function view(){
         $categories = $this->getData();
-        return view('soda.voting::reports.votes.index', compact('categories'));
+        return view('soda.votes.voting::reports.votes.index', compact('categories'));
     }
 
     public function export(){
