@@ -4,6 +4,7 @@ namespace Soda\Voting\Components;
 
 
 use Illuminate\Support\Collection;
+use Soda\Voting\Models\Category;
 use Soda\Voting\Models\Nominee;
 use Hash;
 
