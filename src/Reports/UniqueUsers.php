@@ -4,15 +4,16 @@ namespace Soda\Voting\Reports;
 
 use Illuminate\Http\Request;
 use Soda\Reports\Foundation\AbstractReporter;
+use Soda\Voting\Models\User;
 use Soda\Voting\Models\Vote;
+use Zofe\Rapyd\Facades\DataGrid;
 
 class UniqueUsers extends AbstractReporter{
     public function query(Request $request){
         $votes = (new Vote())->getTable();
         $users = (new User())->getTable();
-
-        $query = Vote::select("$users.username name", "$users.email", "$users.phone", "$users.dob")
-            ->leftJoin($users, '$users.id', '=', "$votes.user_id")
+        $query = Vote::select("$users.username as name", "$users.email", "$users.phone", "$users.dob")
+            ->leftJoin($users,"$users.id", '=', "$votes.user_id")
             ->groupBy("$users.email");
         return $query;
     }
