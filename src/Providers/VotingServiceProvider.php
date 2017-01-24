@@ -3,6 +3,7 @@
 namespace Soda\Voting\Providers;
 
 use Blade;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use SodaMenu;
 
@@ -11,7 +12,7 @@ use SodaMenu;
 class VotingServiceProvider extends ServiceProvider{
   public function boot(){
 
-    $this->loadViewsFrom(__DIR__ . '/../../views', config('soda.voting.hint'));
+    $this->loadViewsFrom(__DIR__ . '/../../views', 'soda.voting');
     $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
     $this->publishes([__DIR__.'/../../config' => config_path('soda/votes')], 'soda.votes');
 
@@ -36,13 +37,10 @@ class VotingServiceProvider extends ServiceProvider{
           'label'       => 'Nominees',
           'isCurrent'   => soda_request_is('voting/nominees*')
         ]);
+    });
 
-        $menu['Voting']->addChild('Reports', [
-          'icon'        => 'fa fa-copy',
-          'url'         => route('voting.reports'),
-          'label'       => 'Reports',
-          'isCurrent'   => soda_request_is('voting/reports*')
-        ]);
+    View::creator('soda::dashboard', function($view){
+        $view->getFactory()->inject('main-content-outer', view('soda.voting::dashboard.main'));
     });
   }
 
