@@ -37,7 +37,7 @@ class NomineeController extends BaseController{
             return $content;
         });
         $grid->paginate(10);
-        return view('soda.voting::nominees.index', compact('filter', 'grid'));
+        return view('soda.votes.voting::nominees.index', compact('filter', 'grid'));
     }
 
 
@@ -51,7 +51,7 @@ class NomineeController extends BaseController{
         if (!is_null($id)){
             $nominee = Nominee::firstOrNew(['id' => $id]);
         }
-        return view('soda.voting::nominees.modify', compact('nominee'));
+        return view('soda.votes.voting::nominees.modify', compact('nominee'));
     }
 
     public function postModify(Request $request){

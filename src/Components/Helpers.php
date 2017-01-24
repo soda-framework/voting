@@ -4,6 +4,7 @@ namespace Soda\Voting\Components;
 
 
 use Illuminate\Support\Collection;
+use Soda\Voting\Models\Category;
 use Soda\Voting\Models\Nominee;
 use Hash;
 
@@ -53,5 +54,19 @@ class Helpers
     static public function verifyVotes($votes, $hash){
         $new = Helpers::hashVotes($votes);
         return $new === $hash;
+    }
+    
+    /**
+     * Checks whether every ctagory has been given a vote
+     *
+     * @param $votes
+     *
+     * @return bool
+     */
+    static public function allCategoriesVoted($votes){
+        $categories = Category::all()->pluck('id');
+        $voted_categories = Nominee::whereIn('id', $votes)->get()->pluck('category_id');
+
+        return $categories->diff($voted_categories)->count() <= 0;
     }
 }
