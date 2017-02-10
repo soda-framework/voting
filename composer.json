@@ -3,7 +3,7 @@
     "description": "Voting packing for Soda CMS",
     "type": "library",
     "require": {
-      "soda-framework/cms": "0.4.*",
+      "soda-framework/cms": "0.5.*",
       "soda-framework/reports": "0.1.*",
       "zofe/rapyd": "2.2.*"
     },
