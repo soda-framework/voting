@@ -15,7 +15,7 @@ in the providers array in `/config/app.php`
 ```
     'providers' => [
         Soda\Providers\SodaServiceProvider::class,
-        Soda\Voting\Providers\SodaServiceProvider::class,
+        Soda\Voting\Providers\VotingServiceProvider::class,
     ]
 ```
 
