@@ -13,6 +13,7 @@ class Helpers
     static public function truncateVotes($votes, $ranked= false)
     {
         $categories = Nominee::whereIn('id', $votes)->get()->groupBy('category_id');
+
         //Sorting values into order found in the votes array
         $categories->transform(function ($category) use ($votes,$ranked) {
             $category = $category->pluck('id')->toArray();

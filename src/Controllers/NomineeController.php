@@ -10,10 +10,15 @@ use Zofe\Rapyd\DataGrid\DataGrid;
 use Illuminate\Http\Request;
 
 class NomineeController extends BaseController{
-    public function anyIndex(){
+    public function anyIndex() {
         $filter = DataFilter::source((new Nominee)->with('category'));
-        $filter->add('name', 'Name', 'text');
-        $filter->add('description', 'Description', 'text');
+
+        foreach (config('soda.votes.voting.fields.nominee') as $field_name => $field) {
+            if( @$field['filter']['enabled'] === true ){
+                $filter->add($field_name, @$field['label'], @$field['filter']['type']);
+            }
+        }
+
         $filter->add('category_id', 'Category', 'select')->options(
             ['-1' => 'All Categories'] + Category::all()->pluck('name', 'id')->toArray())
                 ->insertValue(-1)->scope('hasCategory');
@@ -22,13 +27,24 @@ class NomineeController extends BaseController{
         $filter->build();
 
         $grid = DataGrid::source($filter);
-        $grid->add('image', 'Image')->cell(function($image){
-            $content = '<img class="voting_nominee__image" src="' . $image . '" alt="Nominee image" style="max-width: 100px;"/>';
-            return $content;
-        });
         $grid->add('id', 'ID', true);
-        $grid->add('name', 'Name', true);
-        $grid->add('description', 'Description');
+
+        foreach (config('soda.votes.voting.fields.nominee') as $field_name => $field) {
+            if( @$field['grid']['enabled'] === true ){
+
+                if( @$field['type'] == 'fancy_upload' ){
+                    $grid->add($field_name, @$field['label'])->cell(function($image){
+                        $content = '<img class="voting_nominee__image" src="' . $image . '" alt="Nominee image" style="max-width: 100px;"/>';
+                        return $content;
+                    });
+                }
+                else{
+                    $grid->add($field_name, @$field['label'], @$field['grid']['sortable']);
+                }
+
+            }
+        }
+
         $grid->add('category.name', 'Category', true);
 
         $grid->add('{{ $id }}', 'options')->cell(function($id){
@@ -55,19 +71,25 @@ class NomineeController extends BaseController{
     }
 
     public function postModify(Request $request){
-        $this->validate($request, [
-            'name'          => 'required|max:128',
-            'description'   => 'max:255',
-            'details'       => 'max:1000',
-            'category_id'   => 'required|integer'
-        ]);
+
+        // rules
+        $rules = [];
+        foreach (config('soda.votes.voting.fields.nominee') as $field_name => $field) {
+            if( @$field['rules'] ){
+                $rules[$field_name] = $field['rules'];
+            }
+        }
+
+        $this->validate($request, $rules);
         $nominee = ($request->has('id'))? Nominee::find($request->id) : new Nominee;
-        $nominee->name = $request->input('name');
-        $nominee->description = $request->input('description');
-        $nominee->details = $request->input('details');
+
+        foreach (config('soda.votes.voting.fields.nominee') as $field_name => $field) {
+            $nominee->{$field_name} = $request->input($field_name);
+        }
+
         $nominee->category_id = $request->input('category_id');
         $nominee->save();
 
-        return redirect()->route('voting.nominees.get.modify', $nominee->id)->with('success', 'Successfully edited ' . $nominee->name);
+        return redirect()->route('voting.nominees.get.modify', $nominee->id)->with('success', 'Successfully edited');
     }
 }

@@ -35,25 +35,13 @@
         <form method="post" action="{{ route('voting.nominees.post.modify') }}" id="category-form" enctype="multipart/form-data">
             <input type="hidden" name="id" value="{{ @$nominee->id }}" />
             {!! csrf_field() !!}
-            {!! SodaForm::text([
-                'name'        => 'Nominee Name',
-                'field_name'  => 'name',
-            ])->setModel($nominee) !!}
 
-            {!! SodaForm::textarea([
-                'name'        => 'Nominee Description',
-                'field_name'  => 'description',
-            ])->setModel($nominee) !!}
-
-            {!! SodaForm::fancyupload([
-                'name'          => 'Nominee Image',
-                'field_name'    => 'image'
-            ])->setModel($nominee) !!}
-
-            {!! SodaForm::tinymce([
-                'name'          => 'Nominee Details',
-                'field_name'    => 'details'
-            ])->setModel($nominee) !!}
+            @foreach(config('soda.votes.voting.fields.nominee') as $field_name => $field)
+                {!! SodaForm::{$field['type']}([
+                    'name'        => $field['label'],
+                    'field_name'  => $field_name,
+                ])->setModel($nominee) !!}
+            @endforeach
 
             {!! SodaForm::dropdown([
                 'name'  => 'Nominee Category',

@@ -16,8 +16,8 @@ class CreateCategoriesTable extends Migration
       Schema::create('voting_categories', function(Blueprint $table){
         $table->increments('id');
         $table->string('name', 128);
-        $table->text('description');
-        $table->string('image', 255);
+        $table->text('description')->nullable();
+        $table->string('image', 255)->nullable();
         $table->timestamps();
       });
     }

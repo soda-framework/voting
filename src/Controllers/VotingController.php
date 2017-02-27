@@ -19,7 +19,12 @@ class VotingController extends BaseController {
      */
     public function getCategories($id = null){
         $categories = Category::with(['nominees' => function($q){
-            return $q->orderBy('name', 'ASC');
+            // get first field
+            $fields = reset(config('soda.votes.voting.fields.nominee'));
+            $first_field = key($fields);
+            $first_field = $first_field ? $first_field : 'name';
+
+            return $q->orderBy($first_field, 'ASC');
         }]);
         if(is_null($id)){
             $categories = $categories->get();
@@ -58,6 +63,7 @@ class VotingController extends BaseController {
             else{
                 $votes = Helpers::truncateVotes($votes);
             }
+
             $hash = Helpers::hashVotes($votes);
             return response()->json(['votes' => $votes, 'hash' => $hash]);
         }else{

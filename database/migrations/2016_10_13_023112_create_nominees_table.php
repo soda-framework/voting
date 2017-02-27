@@ -15,10 +15,19 @@ class CreateNomineesTable extends Migration
     {
       Schema::create('voting_nominees', function(Blueprint $table){
           $table->increments('id');
-          $table->string('name', 128);
-          $table->string('description', 255);
-          $table->text('details');
-          $table->string('image', 255)->nullable();
+
+          foreach (config('soda.votes.voting.fields.nominee') as $field_name => $field) {
+              if( in_array(@$field['type'], ['text','fancyupload','textarea']) ){
+                  $table->string($field_name, 255)->nullable();
+              }
+              else if( in_array(@$field['type'], ['tinymce']) ){
+                  $table->text($field_name)->nullable();
+              }
+              else if( in_array(@$field['type'], ['toggle']) ){
+                  $table->boolean($field_name)->nullable();
+              }
+          }
+
           $table->integer('category_id');
           $table->timestamps();
       });
