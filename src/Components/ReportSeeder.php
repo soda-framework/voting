@@ -2,15 +2,15 @@
 
 namespace Soda\Voting\Components;
 
-use Illuminate\Database\Seeder as BaseSeeder;
-use Soda\Cms\Models\Field;
 use Soda\Cms\Models\Role;
+use Soda\Cms\Models\Field;
 use Soda\Reports\Models\Report;
 use Soda\Voting\Models\Category;
-use Soda\Voting\Reports\CategoryVoteReport;
+use Soda\Voting\Reports\UserVotes;
 use Soda\Voting\Reports\UniqueUsers;
 use Soda\Voting\Reports\UserEntries;
-use Soda\Voting\Reports\UserVotes;
+use Soda\Voting\Reports\CategoryVoteReport;
+use Illuminate\Database\Seeder as BaseSeeder;
 
 class ReportSeeder extends BaseSeeder
 {

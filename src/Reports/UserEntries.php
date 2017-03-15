@@ -5,10 +5,10 @@ namespace Soda\Voting\Reports;
 use Illuminate\Http\Request;
 use Soda\Voting\Models\User;
 use Soda\Voting\Models\Vote;
-use Soda\Voting\Reports\Traits\DisplaysUserFields;
 use Zofe\Rapyd\Facades\DataGrid;
-use Soda\Reports\Foundation\AbstractReporter;
 use Illuminate\Support\Facades\DB;
+use Soda\Reports\Foundation\AbstractReporter;
+use Soda\Voting\Reports\Traits\DisplaysUserFields;
 
 /**
  * Class UserEntries.
@@ -39,7 +39,7 @@ class UserEntries extends AbstractReporter
 
         $query = DB::table(DB::raw('('.$subQuery->toSql().') votes'))
             ->select($fields)
-            ->leftJoin($usersTable, "$usersTable.id", '=', "votes.user_id")
+            ->leftJoin($usersTable, "$usersTable.id", '=', 'votes.user_id')
             ->groupBy('votes.user_id')
             ->orderBy('entries', 'DESC')
             ->orderBy('id');

@@ -3,11 +3,11 @@
 namespace Soda\Voting\Reports;
 
 use Illuminate\Http\Request;
-use Soda\Reports\Foundation\AbstractReporter;
 use Soda\Voting\Models\User;
 use Soda\Voting\Models\Vote;
-use Soda\Voting\Reports\Traits\DisplaysUserFields;
 use Zofe\Rapyd\Facades\DataGrid;
+use Soda\Reports\Foundation\AbstractReporter;
+use Soda\Voting\Reports\Traits\DisplaysUserFields;
 
 /**
  * Class UniqueUsers.

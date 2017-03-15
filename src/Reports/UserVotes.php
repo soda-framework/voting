@@ -7,10 +7,10 @@ use Soda\Voting\Models\User;
 use Soda\Voting\Models\Vote;
 use Soda\Voting\Models\Nominee;
 use Soda\Voting\Models\Category;
-use Soda\Voting\Reports\Traits\DisplaysNomineeFields;
-use Soda\Voting\Reports\Traits\DisplaysUserFields;
 use Zofe\Rapyd\Facades\DataGrid;
 use Soda\Reports\Foundation\AbstractReporter;
+use Soda\Voting\Reports\Traits\DisplaysUserFields;
+use Soda\Voting\Reports\Traits\DisplaysNomineeFields;
 
 /**
  * Class UserVotes.
@@ -28,10 +28,9 @@ class UserVotes extends AbstractReporter
         $categoriesTable = (new Category)->getTable();
         $usersTable = (new User)->getTable();
 
-
         $fields = array_merge($this->gatherUserFields($usersTable), $this->gatherNomineeFields($nomineesTable), [
             "$categoriesTable.name as category",
-            "$votesTable.created_at as voted_at"
+            "$votesTable.created_at as voted_at",
         ]);
 
         $query = Vote::select($fields)

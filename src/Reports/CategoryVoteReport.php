@@ -6,10 +6,10 @@ use Illuminate\Http\Request;
 use Soda\Voting\Models\Vote;
 use Soda\Voting\Models\Nominee;
 use Soda\Voting\Models\Category;
-use Soda\Voting\Reports\Traits\DisplaysNomineeFields;
 use Zofe\Rapyd\Facades\DataGrid;
 use Illuminate\Support\Facades\DB;
 use Soda\Reports\Foundation\AbstractReporter;
+use Soda\Voting\Reports\Traits\DisplaysNomineeFields;
 
 /**
  * Class CategoryVoteReport.
@@ -29,7 +29,7 @@ class CategoryVoteReport extends AbstractReporter
         $fields = array_merge($this->gatherNomineeFields($nomineesTable), [
             "$categoriesTable.name as category",
             DB::raw("count($votesTable.nominee_id) as votes"),
-            DB::raw("count(distinct $votesTable.user_id) as voters")
+            DB::raw("count(distinct $votesTable.user_id) as voters"),
         ]);
 
         $query = Vote::select($fields)
