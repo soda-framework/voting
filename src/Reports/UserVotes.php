@@ -23,6 +23,8 @@ class UserVotes extends AbstractReporter
 
     public function query(Request $request)
     {
+        $this->disableStrictMode();
+        
         $votesTable = (new Vote)->getTable();
         $nomineesTable = (new Nominee)->getTable();
         $categoriesTable = (new Category)->getTable();

@@ -20,6 +20,8 @@ class UniqueUsers extends AbstractReporter
 
     public function query(Request $request)
     {
+        $this->disableStrictMode();
+
         $votesTable = (new Vote)->getTable();
         $usersTable = (new User)->getTable();
 
