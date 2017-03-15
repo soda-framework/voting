@@ -59,7 +59,7 @@ class ReportSeeder extends BaseSeeder
         $adminRole = Role::whereName('admin')->first();
 
         if ($adminRole) {
-            $categoryVoteReport->fields()->attach($categoryIdField);
+            $categoryVoteReport->fields()->attach($categoryIdField, ['position' => 0]);
             $categoryVoteReport->roles()->attach($adminRole);
             $uniqueUsersReport->roles()->attach($adminRole);
             $userEntriesReport->roles()->attach($adminRole);

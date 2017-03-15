@@ -7,7 +7,7 @@ use Soda\Voting\Components\ReportSeeder;
 
 class Reports extends Command
 {
-    protected $signature = 'soda:reports:voting';
+    protected $signature = 'soda:voting:reports';
     protected $description = 'Seed Voting Reports for the Soda Database';
 
     /**

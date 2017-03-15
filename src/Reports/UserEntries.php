@@ -5,8 +5,10 @@ namespace Soda\Voting\Reports;
 use Illuminate\Http\Request;
 use Soda\Voting\Models\User;
 use Soda\Voting\Models\Vote;
+use Soda\Voting\Reports\Traits\DisplaysUserFields;
 use Zofe\Rapyd\Facades\DataGrid;
 use Soda\Reports\Foundation\AbstractReporter;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class UserEntries.
@@ -15,26 +17,29 @@ use Soda\Reports\Foundation\AbstractReporter;
  */
 class UserEntries extends AbstractReporter
 {
+    use DisplaysUserFields;
+
     public function query(Request $request)
     {
-        $usersTable = (new User)->getTable();
         $votesTable = (new Vote)->getTable();
+        $usersTable = (new User)->getTable();
 
-        $subQuery = Vote::select('user_id', DB::raw('DATE_FORMAT(created_at, \'%Y-%m-%d\') as date'))
-            ->groupBy('user_id')
+        $subQuery = Vote::select(
+                "$votesTable.user_id",
+                DB::raw('DATE_FORMAT(created_at, \'%Y-%m-%d\') as date'),
+                DB::raw('count(*) as votes')
+            )
+            ->groupBy("$votesTable.user_id")
             ->groupBy('date');
 
+        $fields = $this->gatherUserFields($usersTable);
+        $fields[] = DB::raw('count(*) as entries');
+        $fields[] = DB::raw('sum(votes) as votes');
+
         $query = DB::table(DB::raw('('.$subQuery->toSql().') votes'))
-            ->select(
-                "$usersTable.id",
-                 "$usersTable.username",
-                 "$usersTable.email",
-                 "$usersTable.phone",
-                 "$usersTable.dob",
-                 DB::raw('count(*) as entries')
-            )
-            ->leftJoin('users', "$usersTable.id", '=', "$votesTable.user_id")
-            ->groupBy('user_id')
+            ->select($fields)
+            ->leftJoin($usersTable, "$usersTable.id", '=', "votes.user_id")
+            ->groupBy('votes.user_id')
             ->orderBy('entries', 'DESC')
             ->orderBy('id');
 
@@ -44,12 +49,9 @@ class UserEntries extends AbstractReporter
     public function run(Request $request)
     {
         $grid = DataGrid::source($this->query($request));
-        $grid->add('id', 'ID');
-        $grid->add('username', 'Name');
-        $grid->add('email', 'Email');
-        $grid->add('phone', 'Phone');
-        $grid->add('dob', 'DOB');
+        $grid = $this->addUserFieldsToGrid($grid);
         $grid->add('entries', 'Entries');
+        $grid->add('votes', 'Total Votes');
         $grid->paginate(20)->getGrid($this->getGridView());
 
         return view($this->getView(), ['report' => $this->report, 'grid' => $grid]);
