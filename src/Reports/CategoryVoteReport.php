@@ -11,13 +11,11 @@ use Illuminate\Support\Facades\DB;
 use Soda\Reports\Foundation\AbstractReporter;
 
 /**
- * @deprecated
+ * Class CategoryVoteReport.
  *
- * Class RawVoteReport.
- *
- * Generates a report of votes per nominee, listing total votes
+ * Generates a report of votes per nominee, listing total votes and number of voters
  */
-class RawVoteReport extends AbstractReporter
+class CategoryVoteReport extends AbstractReporter
 {
     public function query(Request $request)
     {
@@ -29,18 +27,21 @@ class RawVoteReport extends AbstractReporter
                 "$nomineesTable.id as id",
                 "$nomineesTable.name as name",
                 "$categoriesTable.name as category",
-                DB::raw("count($votesTable.nominee_id) as votes")
+                DB::raw("count($votesTable.nominee_id) as votes"),
+                DB::raw("count(distinct $votesTable.user_id) as voters")
             )
             ->leftJoin($nomineesTable, "$nomineesTable.id", '=', "$votesTable.nominee_id")
             ->leftJoin($categoriesTable, "$nomineesTable.category_id", '=', "$categoriesTable.id");
 
-        if ($request->has('categoryId')) {
-            $query = $query->where("$categoriesTable.id", $request->input('categoryId'));
+        if ($request->has('category_id')) {
+            $query = $query->where("$categoriesTable.id", $request->input('category_id'));
         }
 
-        return $query->groupBy("$votesTable.nominee_id")
+        $query->groupBy("$votesTable.nominee_id")
             ->orderBy('category')
             ->orderBy('votes', 'DESC');
+
+        return $query;
     }
 
     public function run(Request $request)
@@ -49,6 +50,7 @@ class RawVoteReport extends AbstractReporter
         $grid->add('name', 'Name');
         $grid->add('category', 'Category');
         $grid->add('votes', 'Votes');
+        $grid->add('voters', 'Unique Voters');
 
         $grid->paginate(20)->getGrid($this->getGridView());
 

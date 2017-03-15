@@ -13,7 +13,7 @@ class CreateReportsTable extends Migration
      */
     public function up()
     {
-        Schema::create('voting_reports', function(Blueprint $table){
+        Schema::create('voting_reports', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->string('class_path');

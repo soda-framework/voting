@@ -1,1 +1,8 @@
+vendor/
+node_modules/
+composer.lock
 
+.idea
+.idea/**
+
+.php_cs.cache

@@ -4,7 +4,8 @@ namespace Soda\Voting\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model{
+class Category extends Model
+{
     protected $table = 'voting_categories';
 
     protected $fillable = [
@@ -14,7 +15,8 @@ class Category extends Model{
         'updated_at',
     ];
 
-    public function nominees(){
+    public function nominees()
+    {
         return $this->hasMany(Nominee::class);
     }
 }

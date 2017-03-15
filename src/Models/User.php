@@ -4,7 +4,8 @@ namespace Soda\Voting\Models;
 
 use Soda\Cms\Models\User as SodaUser;
 
-class User extends SodaUser{
+class User extends SodaUser
+{
     protected $fillable = [
         'username',
         'email',
@@ -15,8 +16,8 @@ class User extends SodaUser{
         'dob',
     ];
 
-    public function Votes(){
+    public function Votes()
+    {
         return $this->hasMany(Vote::class);
     }
-
 }

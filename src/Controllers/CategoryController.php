@@ -3,10 +3,10 @@
 namespace Soda\Voting\Controllers;
 
 use Illuminate\Http\Request;
-use Soda\Cms\Http\Controllers\BaseController;
 use Soda\Voting\Models\Category;
-use Zofe\Rapyd\DataFilter\DataFilter;
 use Zofe\Rapyd\DataGrid\DataGrid;
+use Zofe\Rapyd\DataFilter\DataFilter;
+use Soda\Cms\Http\Controllers\BaseController;
 
 class CategoryController extends BaseController
 {
@@ -25,8 +25,9 @@ class CategoryController extends BaseController
         $grid->add('image', 'Image');
         $grid->add('created_at|strtotime|date[d/m/Y]', 'Created At', true);
         $grid->add('{{ $id }}', 'Options')->cell(function ($id) {
-            $content = '<a href="' . route('voting.categories.get.delete', $id) . '" class="btn btn-danger">Delete</a>';
-            $content .= ' <a href=" ' . route('voting.categories.get.modify', $id) . '" class="btn btn-warning">Edit</a>';
+            $content = '<a href="'.route('voting.categories.get.delete', $id).'" class="btn btn-danger">Delete</a>';
+            $content .= ' <a href=" '.route('voting.categories.get.modify', $id).'" class="btn btn-warning">Edit</a>';
+
             return $content;
         });
 
@@ -35,19 +36,20 @@ class CategoryController extends BaseController
         return view('soda.voting::categories.index', compact('filter', 'grid'));
     }
 
-
     public function getDelete($id)
     {
         Category::destroy($id);
+
         return redirect()->route('voting.categories')->with('success', 'Successfully deleted category');
     }
 
     public function getModify($id = null)
     {
         $category = null;
-        if (!is_null($id)){
+        if (! is_null($id)) {
             $category = Category::firstOrNew(['id' => $id]);
         }
+
         return view('soda.voting::categories.modify', compact('category'));
     }
 
@@ -55,13 +57,14 @@ class CategoryController extends BaseController
     {
         $this->validate($request, [
             'name'          => 'required|max:128',
-            'description'   => 'max:255'
+            'description'   => 'max:255',
         ]);
-        $category = ($request->has('id'))? Category::find($request->input('id')) : new Category;
+        $category = ($request->has('id')) ? Category::find($request->input('id')) : new Category;
         //dd($request, $category);
         $category->name = $request->input('name');
         $category->description = $request->input('description');
         $category->save();
+
         return redirect()->route('voting.categories.get.modify', ['category' => $category])->with('success', 'Successfully updated category');
     }
 }

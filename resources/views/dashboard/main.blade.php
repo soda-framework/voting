@@ -2,13 +2,13 @@
 $usersCount = Cache::remember('users.count', 5, function () {
     return [
         'last_update' => \Carbon\Carbon::now(),
-        'count' => number_format(\Soda\Voting\Models\User::count())
+        'count'       => number_format(\Soda\Voting\Models\User::count()),
     ];
 });
 $votesCount = Cache::remember('votes.count', 5, function () {
     return [
         'last_update' => \Carbon\Carbon::now(),
-        'count' => number_format(\Soda\Voting\Models\Vote::count())
+        'count'       => number_format(\Soda\Voting\Models\Vote::count()),
     ];
 });
 ?>

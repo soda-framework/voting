@@ -4,8 +4,9 @@ namespace Soda\Voting\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Nominee extends Model{
-    protected $table = "voting_nominees";
+class Nominee extends Model
+{
+    protected $table = 'voting_nominees';
 
     protected $fillable = [
         'name',
@@ -17,21 +18,27 @@ class Nominee extends Model{
         'updated_at',
     ];
 
-
-    public function votes(){
+    public function votes()
+    {
         return $this->hasMany(Vote::class);
     }
 
-    public function category(){
+    public function category()
+    {
         return $this->belongsTo(Category::class);
     }
 
-    public function getVoteCountAttribute(){
+    public function getVoteCountAttribute()
+    {
         return $this->getRelation('votes');
     }
 
-    public function scopeHasCategory($q, $category_id){
-        if($category_id == -1) return $q;
+    public function scopeHasCategory($q, $category_id)
+    {
+        if ($category_id == -1) {
+            return $q;
+        }
+
         return $q->where('category_id', $category_id);
     }
 }

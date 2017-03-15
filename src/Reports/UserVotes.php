@@ -1,30 +1,48 @@
 <?php
+
 namespace Soda\Voting\Reports;
 
 use Illuminate\Http\Request;
-use Soda\Reports\Foundation\AbstractReporter;
-use Soda\Voting\Models\Category;
-use Soda\Voting\Models\Nominee;
 use Soda\Voting\Models\User;
 use Soda\Voting\Models\Vote;
+use Soda\Voting\Models\Nominee;
+use Soda\Voting\Models\Category;
 use Zofe\Rapyd\Facades\DataGrid;
+use Soda\Reports\Foundation\AbstractReporter;
 
-class UserVotes extends AbstractReporter{
+/**
+ * Class UserVotes.
+ *
+ * Generates a report of every singular vote submitted by user
+ */
+class UserVotes extends AbstractReporter
+{
+    public function query(Request $request)
+    {
+        $votesTable = (new Vote())->getTable();
+        $nomineesTable = (new Nominee())->getTable();
+        $categoriesTable = (new Category())->getTable();
+        $usersTable = (new User())->getTable();
 
-    public function query(Request $request){
-        $votes = (new Vote())->getTable();
-        $nominees = (new Nominee())->getTable();
-        $categories = (new Category())->getTable();
-        $users = (new User())->getTable();
-        $query = Vote::select("$users.username as name", "$votes.ip_address", "$users.email", "$users.phone",
-            "$users.dob", "$nominees.name as nominee", "$categories.name as category", "$votes.created_at as voted_at")
-            ->leftJoin($users, "$users.id", '=', "$votes.user_id")
-            ->leftJoin($nominees, "$nominees.id", '=', "$votes.nominee_id")
-            ->leftJoin($categories, "$categories.id", '=', "$nominees.category_id");
+        $query = Vote::select(
+                "$usersTable.username as name",
+                "$votesTable.ip_address",
+                "$usersTable.email",
+                "$usersTable.phone",
+                "$usersTable.dob",
+                "$nomineesTable.name as nominee",
+                "$categoriesTable.name as category",
+                "$votesTable.created_at as voted_at"
+            )
+            ->leftJoin($usersTable, "$usersTable.id", '=', "$votesTable.user_id")
+            ->leftJoin($nomineesTable, "$nomineesTable.id", '=', "$votesTable.nominee_id")
+            ->leftJoin($categoriesTable, "$categoriesTable.id", '=', "$nomineesTable.category_id");
+
         return $query;
     }
 
-    public function run(Request $request){
+    public function run(Request $request)
+    {
         $grid = DataGrid::source($this->query($request));
         $grid->add('name', 'Name');
         $grid->add('ip_address', 'IP Address');
@@ -35,6 +53,7 @@ class UserVotes extends AbstractReporter{
         $grid->add('category', 'Category');
         $grid->add('voted_at', 'Voted At');
         $grid->paginate(20)->getGrid($this->getGridView());
+
         return view($this->getView(), ['report' => $this->report, 'grid' => $grid]);
     }
 }

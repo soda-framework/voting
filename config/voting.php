@@ -1,45 +1,46 @@
 <?php
+
 return [
   'max_votes_per_category'  => 1,
-  'replace_votes'   => true,
-  'hint'  => 'soda.votes.voting',
-  'api_path' => 'voting/api/v0',
-  'fields' => [
+  'replace_votes'           => true,
+  'hint'                    => 'soda.votes.voting',
+  'api_path'                => 'voting/api/v0',
+  'fields'                  => [
       'nominee' => [
           'name' => [
-              'type' => 'text',
-              'label' => 'Nominee Name',
+              'type'   => 'text',
+              'label'  => 'Nominee Name',
               'filter' => [
                   'enabled' => true,
-                  'type' => 'text'
+                  'type'    => 'text',
               ],
               'grid' => [
-                  'enabled' => true,
+                  'enabled'  => true,
                   'sortable' => true,
               ],
-              'rules' => 'required|max:128'
+              'rules' => 'required|max:128',
           ],
           'description' => [
-              'type' => 'textarea',
+              'type'  => 'textarea',
               'label' => 'Nominee Description',
-              'grid' => [
+              'grid'  => [
                   'enabled' => true,
               ],
-              'rules' => 'max:255'
+              'rules' => 'max:255',
           ],
           'image' => [
-              'type' => 'fancyupload',
+              'type'  => 'fancyupload',
               'label' => 'Nominee Image',
-              'grid' => [
+              'grid'  => [
                   'enabled' => true,
               ],
-              'rules' => 'required|max:128'
+              'rules' => 'required|max:128',
           ],
           'details' => [
-              'type' => 'tinymce',
+              'type'  => 'tinymce',
               'label' => 'Nominee Details',
-              'rules' => 'max:1000'
-          ]
-      ]
-  ]
+              'rules' => 'max:1000',
+          ],
+      ],
+  ],
 ];

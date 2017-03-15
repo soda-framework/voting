@@ -2,33 +2,35 @@
 
 namespace Soda\Voting\Components;
 
-
-use Illuminate\Support\Collection;
-use Soda\Voting\Models\Category;
-use Soda\Voting\Models\Nominee;
 use Hash;
+use Soda\Voting\Models\Nominee;
+use Soda\Voting\Models\Category;
+use Illuminate\Support\Collection;
 
 class Helpers
 {
-    static public function truncateVotes($votes, $ranked= false)
+    public static function truncateVotes($votes, $ranked = false)
     {
         $categories = Nominee::whereIn('id', $votes)->get()->groupBy('category_id');
 
         //Sorting values into order found in the votes array
-        $categories->transform(function ($category) use ($votes,$ranked) {
+        $categories->transform(function ($category) use ($votes, $ranked) {
             $category = $category->pluck('id')->toArray();
 
-            if( $ranked ){
+            if ($ranked) {
                 $new_category = array_fill(0, config('soda.votes.voting.max_votes_per_category'), null); // create to suit length of votes
-                foreach ($votes as $key=>$vote) {
-                    if (in_array($vote, $category)) $new_category[$key] = $vote; // preserve rank in current category
+                foreach ($votes as $key=> $vote) {
+                    if (in_array($vote, $category)) {
+                        $new_category[$key] = $vote;
+                    } // preserve rank in current category
                 }
                 $new_category = collect($new_category);
-            }
-            else{
-                $new_category = New Collection();
+            } else {
+                $new_category = new Collection();
                 foreach ($votes as $vote) {
-                    if (in_array($vote, $category)) $new_category->push($vote);
+                    if (in_array($vote, $category)) {
+                        $new_category->push($vote);
+                    }
                 }
             }
 
@@ -45,26 +47,31 @@ class Helpers
             }
         }
         $categories = $categories->collapse();
+
         return $categories->toArray();
     }
 
-    static public function hashVotes($votes){
-        return hash('sha256', implode($votes) . env('APP_KEY'));
+    public static function hashVotes($votes)
+    {
+        return hash('sha256', implode($votes).env('APP_KEY'));
     }
 
-    static public function verifyVotes($votes, $hash){
-        $new = Helpers::hashVotes($votes);
+    public static function verifyVotes($votes, $hash)
+    {
+        $new = self::hashVotes($votes);
+
         return $new === $hash;
     }
-    
+
     /**
-     * Checks whether every ctagory has been given a vote
+     * Checks whether every ctagory has been given a vote.
      *
      * @param $votes
      *
      * @return bool
      */
-    static public function allCategoriesVoted($votes){
+    public static function allCategoriesVoted($votes)
+    {
         $categories = Category::all()->pluck('id');
         $voted_categories = Nominee::whereIn('id', $votes)->get()->pluck('category_id');
 

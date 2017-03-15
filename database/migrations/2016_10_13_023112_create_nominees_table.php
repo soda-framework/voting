@@ -10,27 +10,25 @@ class CreateNomineesTable extends Migration
      * Run the migrations.
      *
      * @return void
-       */
+     */
     public function up()
     {
-      Schema::create('voting_nominees', function(Blueprint $table){
-          $table->increments('id');
+        Schema::create('voting_nominees', function (Blueprint $table) {
+            $table->increments('id');
 
-          foreach (config('soda.votes.voting.fields.nominee') as $field_name => $field) {
-              if( in_array(@$field['type'], ['text','fancyupload','textarea']) ){
-                  $table->string($field_name, 255)->nullable();
-              }
-              else if( in_array(@$field['type'], ['tinymce']) ){
-                  $table->text($field_name)->nullable();
-              }
-              else if( in_array(@$field['type'], ['toggle']) ){
-                  $table->boolean($field_name)->nullable();
-              }
-          }
+            foreach (config('soda.votes.voting.fields.nominee') as $field_name => $field) {
+                if (in_array(@$field['type'], ['text','fancyupload','textarea'])) {
+                    $table->string($field_name, 255)->nullable();
+                } elseif (in_array(@$field['type'], ['tinymce'])) {
+                    $table->text($field_name)->nullable();
+                } elseif (in_array(@$field['type'], ['toggle'])) {
+                    $table->boolean($field_name)->nullable();
+                }
+            }
 
-          $table->integer('category_id');
-          $table->timestamps();
-      });
+            $table->integer('category_id');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -40,6 +38,6 @@ class CreateNomineesTable extends Migration
      */
     public function down()
     {
-      Schema::drop('voting_nominees');
+        Schema::drop('voting_nominees');
     }
 }
