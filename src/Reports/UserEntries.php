@@ -32,9 +32,10 @@ class UserEntries extends AbstractReporter
             ->groupBy("$votesTable.user_id")
             ->groupBy('date');
 
-        $fields = $this->gatherUserFields($usersTable);
-        $fields[] = DB::raw('count(*) as entries');
-        $fields[] = DB::raw('sum(votes) as votes');
+        $fields = array_merge($this->gatherUserFields($usersTable), [
+            DB::raw('count(*) as entries'),
+            DB::raw('sum(votes) as votes'),
+        ]);
 
         $query = DB::table(DB::raw('('.$subQuery->toSql().') votes'))
             ->select($fields)

@@ -36,7 +36,7 @@ return [
                 ],
                 'rules' => 'required|max:128',
             ],
-            'details'     => [
+            'details' => [
                 'type'  => 'tinymce',
                 'label' => 'Nominee Details',
                 'rules' => 'max:1000',

@@ -2,34 +2,29 @@
 
 namespace Soda\Voting\Reports\Traits;
 
-/**
- * Class CategoryVoteReport.
- *
- * Generates a report of votes per nominee, listing total votes and number of voters
- */
 trait DisplaysUserFields
 {
     public function gatherUserFields($userTable)
     {
-        $userFields = [
-            "$userTable.username as name",
+        $fields = [
+            "$userTable.username as voter",
             "$userTable.email",
         ];
 
-        foreach (config('soda.votes.reports.user_fields') as $userField => $fieldName) {
-            $userFields[] = "$userTable.$userField";
+        foreach (config('soda.votes.reports.user_fields') as $field => $fieldName) {
+            $fields[] = "$userTable.$field";
         }
 
-        return $userFields;
+        return $fields;
     }
 
     public function addUserFieldsToGrid($grid)
     {
-        $grid->add('name', 'Name');
+        $grid->add('voter', 'Voter Name');
         $grid->add('email', 'Email');
 
-        foreach (config('soda.votes.reports.user_fields') as $userField => $fieldName) {
-            $grid->add($userField, $fieldName);
+        foreach (config('soda.votes.reports.user_fields') as $field => $fieldName) {
+            $grid->add($field, $fieldName);
         }
 
         return $grid;
