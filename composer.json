@@ -26,8 +26,14 @@
             "email": "jarrad.littleford@protonmail.com"
         },
         {
-          "name": "Ryan Brenton-Canham",
+          "name": "Ryan Brereton-Canham",
           "email": "ryzaar@hotmail.com"
         }
-    ]
+    ],
+    "extra": {
+      "branch-alias": {
+        "dev-release/0.3": "0.3.x-dev",
+        "dev-master": "0.3.x-dev"
+      }
+    }
 }
