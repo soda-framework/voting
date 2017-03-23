@@ -15,7 +15,7 @@ use Soda\Voting\Reports\Traits\DisplaysUserFields;
  *
  * Generates a report of every entry/submission (sometimes of multiple votes) submitted by a user
  */
-class UserEntries extends AbstractReporter
+class Voters extends AbstractReporter
 {
     use DisplaysUserFields;
 
@@ -42,9 +42,7 @@ class UserEntries extends AbstractReporter
         $query = DB::table(DB::raw('('.$subQuery->toSql().') votes'))
             ->select($fields)
             ->leftJoin($usersTable, "$usersTable.id", '=', 'votes.user_id')
-            ->groupBy('votes.user_id')
-            ->orderBy('entries', 'DESC')
-            ->orderBy('id');
+            ->groupBy('votes.user_id');
 
         return $query;
     }
@@ -52,9 +50,9 @@ class UserEntries extends AbstractReporter
     public function run(Request $request)
     {
         $grid = DataGrid::source($this->query($request));
-        $grid = $this->addUserFieldsToGrid($grid);
-        $grid->add('entries', 'Entries');
-        $grid->add('votes', 'Total Votes');
+        $grid = $this->addUserFieldsToGrid($grid, ['name', 'email']);
+        $grid->add('entries', 'Entries', true);
+        $grid->add('votes', 'Total Votes', true);
         $grid->paginate(20)->getGrid($this->getGridView());
 
         return view($this->getView(), ['report' => $this->report, 'grid' => $grid]);
