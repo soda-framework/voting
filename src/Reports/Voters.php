@@ -50,7 +50,7 @@ class Voters extends AbstractReporter
     public function run(Request $request)
     {
         $grid = DataGrid::source($this->query($request));
-        $grid = $this->addUserFieldsToGrid($grid, ['name', 'email']);
+        $grid = $this->addUserFieldsToGrid($grid, ['voter', 'email']);
         $grid->add('entries', 'Entries', true);
         $grid->add('votes', 'Total Votes', true);
         $grid->paginate(20)->getGrid($this->getGridView());
