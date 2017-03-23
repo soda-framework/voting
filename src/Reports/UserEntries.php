@@ -28,11 +28,11 @@ class UserEntries extends AbstractReporter
 
         $subQuery = Vote::select(
                 "$votesTable.user_id",
-                DB::raw('DATE_FORMAT(created_at, \'%Y-%m-%d\') as date'),
+                "$votesTable.created_at",
                 DB::raw('count(*) as votes')
             )
-            ->groupBy("$votesTable.user_id")
-            ->groupBy('date');
+            ->groupBy('user_id')
+            ->groupBy('created_at');
 
         $fields = array_merge($this->gatherUserFields($usersTable), [
             DB::raw('count(*) as entries'),
