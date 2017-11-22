@@ -1,33 +1,40 @@
 {
-    "name": "soda-framework/voting",
-    "description": "Voting packing for Soda CMS",
-    "type": "library",
-    "require": {
-      "soda-framework/cms": "0.5.*",
-      "soda-framework/reports": "0.1.*",
-      "zofe/rapyd": "2.2.*"
+  "name": "soda-framework/voting",
+  "description": "Voting packing for Soda CMS",
+  "type": "library",
+  "keywords": [
+    "CMS",
+    "Soda",
+    "Framwork",
+    "Laravel",
+    "Voting"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Jarrad Littleford",
+      "email": "jarrad.littleford@protonmail.com"
     },
-    "autoload": {
-       "psr-4": {
-         "Soda\\Voting\\": "src/"
-       }
-    },
-    "keywords": [
-      "CMS",
-      "Soda",
-      "Framwork",
-      "Laravel",
-      "Voting"
-    ],
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Jarrad Littleford",
-            "email": "jarrad.littleford@protonmail.com"
-        },
-        {
-          "name": "Ryan Brenton-Canham",
-          "email": "ryzaar@hotmail.com"
-        }
-    ]
+    {
+      "name": "Ryan Brenton-Canham",
+      "email": "ryzaar@hotmail.com"
+    }
+  ],
+  "require": {
+    "soda-framework/cms": ">=0.7"
+  },
+  "autoload": {
+    "psr-4": {
+      "Soda\\Voting\\": "src/"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-release/0.1": "0.1.x-dev",
+      "dev-release/0.2": "0.2.x-dev",
+      "dev-release/0.3": "0.3.x-dev",
+      "dev-release/0.4": "0.4.x-dev",
+      "dev-master": "0.4.x-dev"
+    }
+  }
 }

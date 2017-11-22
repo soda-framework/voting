@@ -1,8 +1,6 @@
 <?php
 
 namespace Soda\Voting\Providers;
-
-use SodaMenu;
 use Soda\Voting\Console\Reports;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -15,27 +13,27 @@ class VotingServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
         $this->publishes([__DIR__.'/../../config' => config_path('soda/votes')], 'soda.votes');
 
-        SodaMenu::menu('sidebar', function ($menu) {
+        $this->app['soda.menu']->menu('sidebar', function ($menu) {
             $menu->addItem('Voting', [
-          'icon'        => 'fa fa-legal',
-          'label'       => 'Voting',
-          'isCurrent'   => soda_request_is('voting/*'),
-          'permissions' => 'access-cms',
-        ]);
+                'icon'        => 'fa fa-legal',
+                'label'       => 'Voting',
+                'isCurrent'   => soda_request_is('voting/*'),
+                'permissions' => 'access-cms',
+            ]);
 
             $menu['Voting']->addChild('Categories', [
-          'icon'        => 'fa fa-sitemap',
-          'url'         => route('voting.categories'),
-          'label'       => 'Categories',
-          'isCurrent'   => soda_request_is('voting/categories*'),
-        ]);
+                'icon'      => 'fa fa-sitemap',
+                'url'       => route('voting.categories'),
+                'label'     => 'Categories',
+                'isCurrent' => soda_request_is('voting/categories*'),
+            ]);
 
             $menu['Voting']->addChild('Nominees', [
-          'icon'        => 'fa fa-users',
-          'url'         => route('voting.nominees'),
-          'label'       => 'Nominees',
-          'isCurrent'   => soda_request_is('voting/nominees*'),
-        ]);
+                'icon'      => 'fa fa-users',
+                'url'       => route('voting.nominees'),
+                'label'     => 'Nominees',
+                'isCurrent' => soda_request_is('voting/nominees*'),
+            ]);
         });
 
         View::creator('soda::dashboard', function ($view) {
@@ -55,7 +53,7 @@ class VotingServiceProvider extends ServiceProvider
         });
 
         $this->commands([
-          Reports::class,
-      ]);
+            Reports::class,
+        ]);
     }
 }

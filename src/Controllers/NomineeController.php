@@ -11,6 +11,17 @@ use Soda\Cms\Http\Controllers\BaseController;
 
 class NomineeController extends BaseController
 {
+
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            app('soda.interface')->setHeading('Nominees')->setHeadingIcon('fa fa-user');
+            app('soda.interface')->breadcrumbs()->addLink(route('soda.home'), ucfirst(trans('soda::terminology.home')));
+
+            return $next($request);
+        });
+    }
+
     public function anyIndex()
     {
         $filter = DataFilter::source((new Nominee)->with('category'));
@@ -67,10 +78,10 @@ class NomineeController extends BaseController
 
     public function getModify($id = null)
     {
-        $nominee = null;
-        if (! is_null($id)) {
-            $nominee = Nominee::firstOrNew(['id' => $id]);
-        }
+        $nominee = $id ? Nominee::find($id) : new Nominee;
+
+        app('soda.interface')->setHeading($nominee->exists ? $nominee->name : 'New Nominee');
+        app('soda.interface')->breadcrumbs()->addLink(route('voting.nominees'), 'Nominees');
 
         return view('soda.voting::nominees.modify', compact('nominee'));
     }

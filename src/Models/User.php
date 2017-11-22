@@ -2,7 +2,7 @@
 
 namespace Soda\Voting\Models;
 
-use Soda\Cms\Models\User as SodaUser;
+use Soda\Cms\Database\Models\User as SodaUser;
 
 class User extends SodaUser
 {

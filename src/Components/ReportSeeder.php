@@ -22,10 +22,10 @@ class ReportSeeder extends BaseSeeder
     public function run()
     {
         $categoryIdField = Field::create([
-            'name'         => 'Category',
-            'field_name'   => 'category_id',
-            'field_type'   => 'relationship',
-            'field_params' => [
+            'name'          => 'Category',
+            'field_name'    => 'category_id',
+            'field_type'    => 'relationship',
+            'field_params'  => [
                 'model'        => Category::class,
                 'value_column' => 'name',
             ],

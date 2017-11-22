@@ -1,25 +1,8 @@
 @extends(soda_cms_view_path('layouts.inner'))
 
-@section('breadcrumb')
-    <ol class="breadcrumb">
-        <li><a href="{{ route('soda.home') }}">Home</a></li>
-        <li><a href="{{ route('voting.nominees') }}">Nominees</a></li>
-        <li class="active">Edit</li>
-    </ol>
-@stop
-
-@section('head.cms')
-    <title>Voting | Nominees | Edit</title>
-@endsection
-
 @section('content-heading-button')
     @include(soda_cms_view_path('partials.buttons.save'), ['submits' => '#category-form'])
 @endsection
-
-@include(soda_cms_view_path('partials.heading'), [
-    'icon'        => 'fa fa-user',
-    'title'       => 'Editing Nominee - ' . @$nominee->name,
-])
 
 @section('content')
     <div class="content-block">
@@ -37,13 +20,13 @@
             {!! csrf_field() !!}
 
             @foreach(config('soda.votes.voting.fields.nominee') as $field_name => $field)
-                {!! SodaForm::{$field['type']}([
+                {!! app('soda.form')->{$field['type']}([
                     'name'        => $field['label'],
                     'field_name'  => $field_name,
                 ])->setModel($nominee) !!}
             @endforeach
 
-            {!! SodaForm::dropdown([
+            {!! app('soda.form')->dropdown([
                 'name'  => 'Nominee Category',
                 'field_name'    => 'category_id',
                 'field_params'       => [

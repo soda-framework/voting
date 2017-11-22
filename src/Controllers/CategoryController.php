@@ -10,6 +10,17 @@ use Soda\Cms\Http\Controllers\BaseController;
 
 class CategoryController extends BaseController
 {
+
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            app('soda.interface')->setHeading('Categories')->setHeadingIcon('fa fa-sitemap');
+            app('soda.interface')->breadcrumbs()->addLink(route('soda.home'), ucfirst(trans('soda::terminology.home')));
+
+            return $next($request);
+        });
+    }
+
     public function anyIndex()
     {
         $filter = DataFilter::source(new Category());
@@ -45,10 +56,10 @@ class CategoryController extends BaseController
 
     public function getModify($id = null)
     {
-        $category = null;
-        if (! is_null($id)) {
-            $category = Category::firstOrNew(['id' => $id]);
-        }
+        $category = $id ? Category::find($id) : new Category;
+
+        app('soda.interface')->setHeading($category->exists ? $category->name : 'New Category');
+        app('soda.interface')->breadcrumbs()->addLink(route('voting.categories'), 'Categories');
 
         return view('soda.voting::categories.modify', compact('category'));
     }
