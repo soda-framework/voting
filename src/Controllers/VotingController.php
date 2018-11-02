@@ -19,7 +19,7 @@ class VotingController extends BaseController {
      */
     public function getCategories($id = null){
         $categories = Category::with(['nominees' => function($q){
-            return $q->orderBy('name', 'ASC');
+            return $q->orderBy('id', 'ASC');
         }]);
         if(is_null($id)){
             $categories = $categories->get();
